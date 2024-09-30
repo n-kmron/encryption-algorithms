@@ -1,22 +1,39 @@
 package cnoupoue;
 
+import algorithms.AESCBCWithDiffieHellman;
 import algorithms.TripleDESEncryption;
 
-import static algorithms.TripleDESEncryption.decrypt;
-import static algorithms.TripleDESEncryption.encrypt;
+import static algorithms.TripleDESEncryption.*;
+import static algorithms.AESCBCWithDiffieHellman.*;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            String message = "Mon message a encrypter";
+            String message = "Nouveau message";
 
             // Encryption with 3DES
-            String encryptedMessage = encrypt(message);
-            System.out.println("Crypted message : " + encryptedMessage);
+            String encryptedMessage3DES = TripleDESEncryption.encrypt(message);
+            System.out.println("Crypted message with 3DES : " + encryptedMessage3DES);
 
             // Decryption with 3DES
-            String decryptedMessage = decrypt(encryptedMessage);
-            System.out.println("Decrypted message : " + decryptedMessage);
+            String decryptedMessage3DES = TripleDESEncryption.decrypt(encryptedMessage3DES);
+            System.out.println("Decrypted message with 3DES: " + decryptedMessage3DES);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            AESCBCWithDiffieHellman.generateSharedSecret(); // Generate the shared secret key
+
+            String message = "Nouveau message";
+
+            String encryptedMessage = AESCBCWithDiffieHellman.encrypt(message);
+            System.out.println("Crypted message with AES: " + encryptedMessage);
+
+            String decryptedMessageDH = AESCBCWithDiffieHellman.decrypt(encryptedMessage);
+            System.out.println("Decrypted message with AES: " + decryptedMessageDH);
         } catch (Exception e) {
             e.printStackTrace();
         }
